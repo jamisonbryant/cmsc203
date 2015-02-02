@@ -10,7 +10,7 @@ public class SalesTax
 		//identifier declarations 
 		final double TAX_RATE = 0.055; 
 		double price; 
-		double tax 
+		double tax; 
 		double total; 
 		String item; 
 
@@ -24,8 +24,11 @@ public class SalesTax
 		price = keyboard.nextDouble(); 
 
 		//calculations 
-		tax = price + TAX_RATE; 
-		totl = price * tax; 
+		// Fixed two logic errors here:
+		//   1) Tax is equal to price * rate, not price + rate
+		//   2) Total is equal to price + tax, not price * tax
+		tax = price * TAX_RATE; 
+		total = price + tax; 
 
 		//display results 
 		System.out.print(item + " $"); 
@@ -34,5 +37,8 @@ public class SalesTax
 		System.out.println(tax); 
 		System.out.print("Total $"); 
 		System.out.println(total); 
+		
+		// Also closed keyboard resource for good measure
+		keyboard.close();
 	} 
 } 
