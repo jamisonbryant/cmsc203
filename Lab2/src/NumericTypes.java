@@ -4,6 +4,8 @@
 
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 public class NumericTypes {
 	public static void main (String [] args) {
 		// Create a scanner object
@@ -39,12 +41,28 @@ public class NumericTypes {
 
 		// Prompt for and print the user's name
 		System.out.println("=== TASK 2 ===");
-		System.out.println("What is your first name? ");
-		firstName = scanner.nextLine();
-		System.out.println("What is your last name? ");
-		lastName = scanner.nextLine();
+		firstName = (String) JOptionPane.showInputDialog(
+			null,
+			"What is your first name?",
+			"Task 2",
+			JOptionPane.PLAIN_MESSAGE,
+			null,
+			null,
+			null
+		);
+				
+		lastName = (String) JOptionPane.showInputDialog(
+			null,
+			"What is your last name?",
+			"Task 2",
+			JOptionPane.PLAIN_MESSAGE,
+			null,
+			null,
+			null
+		);
+		
 		fullName = firstName + " " + lastName;
-		System.out.println(fullName);
+		JOptionPane.showMessageDialog(null, "Your full name is " + fullName);
 
 		System.out.println();
 		
