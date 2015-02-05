@@ -20,6 +20,7 @@ public class Mileage {
 		// Display program intro
 		System.out.println("This program calculates MPG (miles per gallon)");
 		System.out.println();
+		System.out.println("=== TASK 5 ===");
 		
 		// Prompt for miles driven
 		System.out.println("Enter miles driven: ");

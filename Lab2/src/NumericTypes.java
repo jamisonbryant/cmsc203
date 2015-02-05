@@ -10,18 +10,23 @@ public class NumericTypes {
 		Scanner scanner = new Scanner(System.in);
 	
 		// Identifiers
-		final int NUMBER = 2;		// number of scores
-		final int SCORE1 = 100;		// first test score
-		final int SCORE2 = 95;		// second test score
-		final int BOILING_IN_F = 212;  // freezing temperature
-		int fToC;						// temperature in celsius
-		double average;				// arithmetic average
-		String output;					// line of output to print out
-		//TASK #2 declare variables used here
-		//TASK #3 declare variables used here
-		//TASK #4 declare variables used here
+		final int NUMBER = 2;			// Number of scores
+		final int SCORE1 = 100;			// First test score
+		final int SCORE2 = 95;			// Second test score
+		final int BOILING_IN_F = 212;	// The temperature (in F) to convert
+		int fToC;						// The converted temperature (in C)
+		double average;					// The calculated average
+		String output;					// The output to print out
+		String firstName;				// The user's first name
+		String lastName;				// The user's last name
+		String fullName;				// The user's full name
+		char firstInitial;				// The user's first initial
+		double diameter;				// The sphere's diameter
+		double radius;					// The sphere's radius
+		double volume;					// The sphere's volume
 
 		// Find the average of two numbers
+		System.out.println("=== TASK 1 ===");
 		average = (int) (SCORE1 + SCORE2) / (double) NUMBER;
 		output = SCORE1 + " and " + SCORE2 + " have an average of " + average;
 		System.out.println(output);
@@ -33,7 +38,7 @@ public class NumericTypes {
 		System.out.println();
 
 		// Prompt for and print the user's name
-		String firstName, lastName, fullName = "";
+		System.out.println("=== TASK 2 ===");
 		System.out.println("What is your first name? ");
 		firstName = scanner.nextLine();
 		System.out.println("What is your last name? ");
@@ -44,7 +49,8 @@ public class NumericTypes {
 		System.out.println();
 		
 		// Modify the user's name
-		char firstInitial = firstName.charAt(0);
+		System.out.println("=== TASK 3 ===");
+		firstInitial = firstName.charAt(0);
 		System.out.println("Your first initial: " + firstInitial);
 		fullName = fullName.toUpperCase();
 		System.out.println(fullName + " (your name) has " + fullName.length() + " characters");
@@ -56,7 +62,7 @@ public class NumericTypes {
 		System.out.println();
 		
 		// Calculate the volume of a sphere
-		double diameter, radius, volume;
+		System.out.println("=== TASK 4 ===");
 		System.out.println("Enter a diameter (double): ");
 		diameter = scanner.nextDouble();
 		radius = diameter / 2.0;
