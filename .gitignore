@@ -1,6 +1,10 @@
 .metadata/
 .recommenders/
+.settings/
+.classpath
+.project
 bin/
+dist/
 tmp/
 *.tmp
 *.bak
