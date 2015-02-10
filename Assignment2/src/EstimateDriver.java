@@ -1,54 +1,95 @@
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import javax.swing.JOptionPane;
 
 
 public class EstimateDriver { 
-	private static final String title = "Handy Estimate Calculator";
+	private static final String GUI_TITLE = "Handy Estimate Calculator";
 	
 	public static void main(String[] args) {
 		boolean valid;
 		String input;
-		String choice;
-		int footage;
+		int option;
+		String task = "";
+		double footage = 0.0;
+		double taskTotal = 0.0;
+		double jobTotal = 0.0;
 		
-		// Prompt user for task choice
-		valid = false;
-		do {
-			input = JOptionPane.showInputDialog(null, 
-				"Enter a task to calculate an estimate for:\n(either " +
-				"\"painting\" or \"carpeting\")\n", title, 
-				JOptionPane.QUESTION_MESSAGE);
-			
-			// Validate user input
-			if(input.equals("painting") || input.equals("carpeting")) {
-				choice = input;
-				valid = true;
-			} else {
-				JOptionPane.showMessageDialog(null, "\"" + input + "\" is " +
-					"not a valid task!", title, JOptionPane.ERROR_MESSAGE);
-			}
-		} while(!valid);
-		
-		// Prompt user for square footage
-		valid = false;
 		do {
 			// Prompt user for task choice
-			input = JOptionPane.showInputDialog(null, 
-				"Enter the square footage that will be painted/carpeted: ", 
-				title, JOptionPane.QUESTION_MESSAGE);
-			
-			// Validate user input
-			try {
-				footage = Integer.parseInt(input);
+			valid = false;
+			do {
+				input = JOptionPane.showInputDialog(null, 
+					"Enter a task to calculate an estimate for:\n(either " +
+					"\"paint\" or \"carpet\")\n", GUI_TITLE, 
+					JOptionPane.QUESTION_MESSAGE);
 				
-				if(footage <= 0) {
-					throw new NumberFormatException();
+				// Validate user input
+				if(input.toLowerCase().equals("paint") || 
+						input.toLowerCase().equals("carpet")) {
+					task = input;
+					valid = true;
+				} else {
+					JOptionPane.showMessageDialog(null, "\"" + input + "\" is " +
+						"not a valid task!", GUI_TITLE, 
+						JOptionPane.ERROR_MESSAGE);
 				}
+			} while(!valid);
+			
+			// Prompt user for square footage
+			valid = false;
+			do {
+				// Prompt user for task choice
+				input = JOptionPane.showInputDialog(null, 
+					"Enter the square footage that will be " + task + "ed: ", 
+					GUI_TITLE, JOptionPane.QUESTION_MESSAGE);
 				
-				valid = true;
-			} catch(NumberFormatException e) {
-				JOptionPane.showMessageDialog(null, "\"" + input + "\" is " +
-					"not a valid number!", title, JOptionPane.ERROR_MESSAGE);
-			}
-		} while(!valid);
+				if(input == null) {
+					System.err.println("Application terminated by user!");
+					System.exit(0);
+				} else {
+					// Validate user input
+					try {
+						footage = Double.parseDouble(input);
+						
+						if(footage <= 0.0) {
+							throw new NumberFormatException();
+						}
+						
+						valid = true;
+					} catch(NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, "\"" + input + 
+							"\" is not a valid number!", GUI_TITLE, 
+							JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			} while(!valid);
+			
+			// Perform estimate
+			Estimate estimate = new Estimate();
+			estimate.setTask(task);
+			estimate.setSize((double) footage);
+			taskTotal = estimate.getTotal(); 
+			jobTotal += taskTotal;
+			
+			// Format total as currency
+			NumberFormat number = 
+				NumberFormat.getCurrencyInstance(Locale.US);
+			
+			// Display estimate
+			JOptionPane.showMessageDialog(null, "The cost of this task will " + 
+				"be " + number.format(new Double(taskTotal)) + "\n" +
+				"The cost of the job is " + number.format(new Double(jobTotal)), 
+				GUI_TITLE, 
+				JOptionPane.INFORMATION_MESSAGE);
+			
+			// Prompt for another estimate
+			option = JOptionPane.showConfirmDialog(null, "Would you like to " +
+				"calculate another estimate?", GUI_TITLE, 
+				JOptionPane.YES_NO_OPTION);
+		} while(option == JOptionPane.YES_OPTION);
+		
+		// Display the total job cost
 	}
 }
