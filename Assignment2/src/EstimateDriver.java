@@ -2,18 +2,26 @@ import javax.swing.JOptionPane;
 
 
 public class EstimateDriver { 
-	public static final String WINDOW_TITLE = "Handy Estimate Tool";
-		
+	private static final String title = "Handy Estimate Calculator";
+	
 	public static void main(String[] args) {
-		// Declare array of choices
-		// TODO: Why can't we use arrays in this assignment?
-		String[] tasks = {"Painting", "Carpeting"};
+		boolean valid = false;
+		String choice;
 		
-		// Display choice dialog
-		String choice = (String) JOptionPane.showInputDialog(null, 
-			"Choose a task to calculate an estimate for:\n\n",
-				WINDOW_TITLE, JOptionPane.QUESTION_MESSAGE, null, tasks, 
-					"Painting"
-		);
+		do {
+			// Prompt user for task choice
+			choice = JOptionPane.showInputDialog(null, 
+				"Enter a task to calculate an estimate for:\n(either " +
+				"\"painting\" or \"carpeting\")\n", title, 
+				JOptionPane.QUESTION_MESSAGE);
+			
+			// Validate user input
+			if(choice.equals("painting") || choice.equals("carpeting")) {
+				valid = true;
+			} else {
+				JOptionPane.showMessageDialog(null, "\"" + choice + "\" is " +
+						"not a valid task!", title, JOptionPane.ERROR_MESSAGE);
+			}
+		} while(!valid);
 	}
 }
