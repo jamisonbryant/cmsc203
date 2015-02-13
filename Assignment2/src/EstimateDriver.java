@@ -22,6 +22,7 @@ public class EstimateDriver {
 		String input;
 		int option;
 		String task = "";
+		double cost = 0.0;
 		double footage = 0.0;
 		double taskTotal = 0.0;
 		double jobTotal = 0.0;
@@ -77,10 +78,46 @@ public class EstimateDriver {
 				}
 			} while(!valid);
 			
+			// Prompt user for cost of materials
+			valid = false;
+			
+			do {
+				if(task.equals("paint")) {
+					input = JOptionPane.showInputDialog(null, 
+						"Enter the cost of one gallon of paint:", 
+						GUI_TITLE, JOptionPane.QUESTION_MESSAGE);
+				} else if(task.equals("carpet")) {
+					input = JOptionPane.showInputDialog(null, 
+						"Enter the cost of one square yard of carpet:", 
+						GUI_TITLE, JOptionPane.QUESTION_MESSAGE);
+				}
+				
+				if(input == null) {
+					System.err.println("Application terminated by user!");
+					System.exit(0);
+				} else {
+					// Validate user input
+					try {
+						cost = Double.parseDouble(input);
+						
+						if(cost <= 0.0) {
+							throw new NumberFormatException();
+						}
+						
+						valid = true;
+					} catch(NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, "\"" + input + 
+							"\" is not a valid number!", GUI_TITLE, 
+							JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			} while(!valid);
+			
 			// Perform estimate
 			Estimate estimate = new Estimate();
 			estimate.setTask(task);
-			estimate.setSize((double) footage);
+			estimate.setSize(footage);
+			estimate.setCost(cost);
 			taskTotal = estimate.getTotal(); 
 			jobTotal += taskTotal;
 			
