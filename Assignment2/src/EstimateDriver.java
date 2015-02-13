@@ -3,7 +3,17 @@ import java.util.Locale;
 
 import javax.swing.JOptionPane;
 
-
+/**
+ * Handy Estimate Driver
+ * 
+ * Calculates the cost of a task (either painting or carpeting) and
+ * also the cost of a job that includes multiple tasks.
+ * 
+ * Utilizes the Estimate class to calculate estimates.
+ * 
+ * @author Jamison Bryant <jbryan46@montgomerycollege.edu
+ *
+ */
 public class EstimateDriver { 
 	private static final String GUI_TITLE = "Handy Estimate Calculator";
 	
@@ -19,6 +29,7 @@ public class EstimateDriver {
 		do {
 			// Prompt user for task choice
 			valid = false;
+			
 			do {
 				input = JOptionPane.showInputDialog(null, 
 					"Enter a task to calculate an estimate for:\n(either " +
@@ -39,8 +50,8 @@ public class EstimateDriver {
 			
 			// Prompt user for square footage
 			valid = false;
+			
 			do {
-				// Prompt user for task choice
 				input = JOptionPane.showInputDialog(null, 
 					"Enter the square footage that will be " + task + "ed: ", 
 					GUI_TITLE, JOptionPane.QUESTION_MESSAGE);
