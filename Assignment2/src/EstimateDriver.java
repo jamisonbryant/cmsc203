@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * 
  * Utilizes the Estimate class to calculate estimates.
  * 
- * @author Jamison Bryant <jbryan46@montgomerycollege.edu
+ * @author Jamison Bryant <jbryan46@montgomerycollege.edu>
  *
  */
 public class EstimateDriver { 
@@ -38,8 +38,11 @@ public class EstimateDriver {
 					JOptionPane.QUESTION_MESSAGE);
 				
 				// Validate user input
-				if(input.toLowerCase().equals("paint") || 
-						input.toLowerCase().equals("carpet")) {
+				if(input == null) {
+					System.err.println("Application terminated by user!");
+					System.exit(0);
+				} else if(input.toLowerCase().equals("paint") || 
+					input.toLowerCase().equals("carpet")) {
 					task = input;
 					valid = true;
 				} else {

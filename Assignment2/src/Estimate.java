@@ -67,15 +67,15 @@ public class Estimate
     {
     	if (t.toLowerCase().equals("paint"))
     	{
-    		System.out.println("it's a paint job");
+    		//System.out.println("it's a paint job");
     		task = "paint";
     		
     	} else if (t.toLowerCase().equals("carpet")){
-    		System.out.println("it's a carpet job");
+    		//System.out.println("it's a carpet job");
     		task = "carpet";
     		
     	} else {
-    		System.out.println("OUT OF SCOPE TASK REQUESTED");
+    		//System.out.println("OUT OF SCOPE TASK REQUESTED");
     		task = "OUT OF SCOPE";
     	}
     	
