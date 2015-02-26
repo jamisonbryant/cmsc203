@@ -1,0 +1,27 @@
+<project name="AppletsLab" default="run" basedir=".">
+    <!-- Properties -->
+    <property name="browser" value="appletviewer" />
+    <property name="file" value="bin/index.html" />
+
+    <!-- Cleans up the previous build -->
+    <target name="clean">
+        <echo message="Cleaning up old build..." />
+        <delete file="bin/*.class" />
+    	<delete file="bin/*.jar" />
+    </target>
+
+    <!-- Compiles the applet -->
+    <target name="compile" depends="clean">
+        <echo message="Compiling applet..." />
+        <javac srcdir="src" destdir="bin" />
+        <jar destfile="bin/applet.jar" basedir="bin" includes="*.class,*.jpg" />
+    </target>
+
+    <!-- Runs the applet -->
+    <target name="run" depends="compile">
+        <echo message="Launching applet..." />
+        <exec executable="${browser}" spawn="true">
+            <arg line="${file}" />
+        </exec>
+    </target>
+</project>
