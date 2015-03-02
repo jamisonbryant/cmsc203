@@ -85,23 +85,51 @@ public class NametagMaker extends JApplet {
 			(getWidth() - metrics.stringWidth(location)) / 2, 
 				(7 * ringStartY) + (3 * metrics.getHeight()));
 		
-		// Add flag image
-		BufferedImage flag = null;
-		
-		try {
-			flag = ImageIO.read(this.getClass().getResource("flag.jpg"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		drawing.drawImage((Image) flag, (getWidth() - flag.getWidth()) / 2, 
-			(10 * ringStartY), this);
+		// Draw flag
+        //
+        // The below variables use the actual terms for the parts of a 
+        // flag. Interesting reading! Link below:
+        //
+        // http://www.netstate.com/states/symb/flags/flag_terminology.htm
+        // http://www.usflag.org/flagspecs.html
+        double scale = 50.0;
+        double flagFly = 1.9 * scale;
+        double cantonHoist = 0.5385 * scale;
+        double cantonFly = 0.76 * scale;
+        double stripeWidth = 0.0769 * scale;
+        int flagStartX = (int) ((getWidth() - flagFly) / 2);
+        int flagStartY = 10 * ringStartY;
+        
+        // Draw flag border
+        drawing.setColor(Color.black);
+        drawing.drawRect(flagStartX, flagStartY, 
+    		(int) flagFly, (int) (13 * stripeWidth));
+
+        // Draw flag stripes
+        for(int i = 0; i < 13; i++) {
+            if(i % 2 == 0) {
+            	drawing.setColor(Color.red);
+            } else {
+            	drawing.setColor(Color.white);
+            }
+
+            drawing.fillRect(flagStartX, (int) (flagStartY + (i * stripeWidth)), 
+        		(int) flagFly, (int) stripeWidth); 
+        }
+
+        // Draw flag canton
+        drawing.setColor(Color.blue);
+        drawing.drawRect(flagStartX, flagStartY, 
+    		(int) cantonFly, (int) cantonHoist);
+        drawing.fillRect(flagStartX, flagStartY, 
+        		(int) cantonFly, (int) cantonHoist);
 		
 		// Add country name
+        drawing.setColor(Color.black);
 		String country = "USA";
 		drawing.drawString(country, 
 			(getWidth() - metrics.stringWidth(country)) / 2, 
-			(10 * ringStartY) + flag.getHeight() + 
-				(2 * metrics.getHeight()));
+			(10 * ringStartY) + (2 * metrics.getHeight()) + 
+			(int) (13 * stripeWidth));
 	}
 }

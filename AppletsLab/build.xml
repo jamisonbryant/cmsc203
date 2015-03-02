@@ -14,7 +14,7 @@
     <target name="compile" depends="clean">
         <echo message="Compiling applet..." />
         <javac srcdir="src" destdir="bin" />
-        <jar destfile="bin/applet.jar" basedir="bin" includes="*.class,*.jpg" />
+        <jar destfile="bin/applet.jar" basedir="bin" includes="*.class" />
     </target>
 
     <!-- Runs the applet -->
