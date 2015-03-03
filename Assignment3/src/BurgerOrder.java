@@ -1,3 +1,7 @@
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
+
 /**
  * Keeps track of the items in a Hartatak Burger order and calculates the 
  * order's subtotal, tax, and total.
@@ -219,5 +223,28 @@ public class BurgerOrder {
 		
 		// Return result
 		return total;
+	}
+	
+	/**
+	 * Returns a reciept for the order
+	 * 
+	 * @return string The receiept
+	 */
+	public String getReceipt() {
+		// Set up currency formatter
+		Currency usd = Currency.getInstance("USD");
+		NumberFormat money = NumberFormat.getCurrencyInstance(Locale.US);
+		money.setCurrency(usd);
+		
+		// Build receipt string
+		String receipt = "Thank you for choosing Hartatak Burgers!\n\n";
+		receipt += "Your order was:\n";
+		receipt += " - 1 " + meal + ": " + money.format(getMealPrice()) + "\n";
+		receipt += " - " + condiments + " condiments: " + money.format(getCondimentsPrice()) + "\n\n";
+		receipt += "Subtotal: " + money.format(subtotal) + "\n";
+		receipt += "Tax: " + money.format(tax) + "\n";
+		receipt += "Total: " + money.format(total) + "\n";
+		
+		return receipt;
 	}
 }

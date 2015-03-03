@@ -146,9 +146,9 @@ public class GuiDriver extends JPanel {
 			getTotalButton.setActionCommand("get_total");
 			getTotalButton.addActionListener(new ActionButtonListener(this));
 			
-			JButton printRecieptButton = new JButton("Print Reciept");
-			printRecieptButton.setActionCommand("print_reciept");
-			printRecieptButton.addActionListener(new ActionButtonListener(this));
+			JButton printReceiptButton = new JButton("Print Receipt");
+			printReceiptButton.setActionCommand("print_receipt");
+			printReceiptButton.addActionListener(new ActionButtonListener(this));
 			
 			JButton exitButton = new JButton("Exit");
 			exitButton.setActionCommand("exit");
@@ -157,12 +157,12 @@ public class GuiDriver extends JPanel {
 			// Add action buttons to button group
 			ButtonGroup actionButtonButtonGroup = new ButtonGroup();
 			actionButtonButtonGroup.add(getTotalButton);
-			actionButtonButtonGroup.add(printRecieptButton);
+			actionButtonButtonGroup.add(printReceiptButton);
 			actionButtonButtonGroup.add(exitButton);
 			
 		// Add action buttons to panel
 		buttonsPanel.add(getTotalButton, BorderLayout.PAGE_START);
-		buttonsPanel.add(printRecieptButton, BorderLayout.CENTER);
+		buttonsPanel.add(printReceiptButton, BorderLayout.CENTER);
 		buttonsPanel.add(exitButton, BorderLayout.PAGE_END);
 		
 		// Create results panel
@@ -312,8 +312,8 @@ public class GuiDriver extends JPanel {
 		 * passed to the GUI's order object and the subtotal is calculated,
 		 * then the GUI's text fields are updated.
 		 * 
-		 * If the "Print Reciept" button is pressed (identified by the action
-		 * command "print_reciept") then data about the order is fetched and
+		 * If the "Print Receipt" button is pressed (identified by the action
+		 * command "print_receipt") then data about the order is fetched and
 		 * a newline-delimited string is built and displayed to the user in an
 		 * alert box.
 		 * 
@@ -338,32 +338,9 @@ public class GuiDriver extends JPanel {
 				driver.subtotalTextField.setText(money.format(subtotal));
 				driver.taxTextField.setText(money.format(tax));
 				driver.totalTextField.setText(money.format(total));
-			} else if(actionCommand.equals("print_reciept")) {
-				// Get order data
-				String meal = driver.order.getMeal();
-				double mealPrice = driver.order.getMealPrice();
-				int condiments = driver.order.getCondiments();
-				double condimentsPrice = driver.order.getCondimentsPrice();
-				double subtotal = driver.order.getSubtotal();
-				double tax = driver.order.getTax();
-				double total = driver.order.getTotal();
-				
-				// Set up currency formatter
-				Currency usd = Currency.getInstance("USD");
-				NumberFormat money = NumberFormat.getCurrencyInstance(Locale.US);
-				money.setCurrency(usd);
-				
-				// Build reciept string
-				String recieptString = "Welcome to Hartatak Burgers!\n\n";
-				recieptString += "Your order was:\n";
-				recieptString += " - 1 " + meal + ": " + money.format(mealPrice) + "\n";
-				recieptString += " - " + condiments + " condiments: " + money.format(condimentsPrice) + "\n\n";
-				recieptString += "Subtotal: " + money.format(subtotal) + "\n";
-				recieptString += "Tax: " + money.format(tax) + "\n";
-				recieptString += "Total: " + money.format(total) + "\n";
-				
-				// Display reciept dialog box
-				JOptionPane.showMessageDialog(this.driver, recieptString);
+			} else if(actionCommand.equals("print_receipt")) {
+				// Display receipt dialog box
+				JOptionPane.showMessageDialog(this.driver, driver.order.getReceipt());
 			} else if(actionCommand.equals("exit")) {
 				System.exit(0);
 			}			
