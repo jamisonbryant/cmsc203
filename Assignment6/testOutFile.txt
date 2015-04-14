@@ -1,0 +1,9 @@
+Categories; Best Restaurants in Rockville; Average Rating
+Mexican; El Mariachi: 3.5;Al Carbon: 4.0;Tortacos: 4.2;Taco Bar: 4.5;
+Thai; Thai Cuisine: 4.0;Amina Thai: 4.2;Thai House: 4.5;
+American (Traditional); Urban BBQ: 3.5;Coastal Flats: 4.0;
+American (New); Chef Geoff's: 3.5;Dogfish Head Alehouse: 4.0;Potomac Grill: 4.5;
+Greek; Apollo Restaurant: 4.0;Vasilis Med Grill: 4.1;Mykonos Grill: 4.2;Cava Mezze: 4.5;
+Chinese; Sichuan Jin River: 3.5;Joe's Noodle House: 4.5;
+Italian; Sugo Osteria: 4.0;Vignola Gourmet: 4.4;Il Pizzico: 4.5;
+Vietnamese; Pho Eatery: 3.5;Mr Banh Mi: 4.0;Pho 75: 4.1;Pho Nom Nom: 4.2;Mi La Cay: 4.5;

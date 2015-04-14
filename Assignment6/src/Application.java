@@ -194,6 +194,8 @@ public class Application extends JFrame implements ActionListener {
 			double average = 0.0;		
 			
 			for (int i = 0; i < categoryList.size(); i++) {
+				total = 0.0;
+				
 				for (int j = 0; j < restaurantList.get(i).size(); j++) {
 					total += restaurantList.get(i).get(j).getRating();				
 				}
@@ -211,7 +213,7 @@ public class Application extends JFrame implements ActionListener {
 			int response = chooser.showOpenDialog(null);
 			
 			// Pass file to manager
-			if(response == JFileChooser.APPROVE_OPTION) {				
+			if(response == JFileChooser.APPROVE_OPTION) {
 				try {
 					manager.writeToFile(chooser.getSelectedFile());
 				} catch(IOException ex) {

@@ -29,9 +29,9 @@ public class BestFoodManager implements BestFoodManagerInterface {
 	/**
 	 * Reads restaurant data from a file
 	 * 
-	 * @param  The file to read data from
+	 * @param file The file to read data from
 	 * @return A 2-dimensional array of restaurants
-	 * @throws IOException
+	 * @throws IOException If the file cannot be opened
 	 */
 	@Override
 	public Restaurant[][] readFromFile(File file) throws IOException {
@@ -134,10 +134,18 @@ public class BestFoodManager implements BestFoodManagerInterface {
 	}
 
 	@Override
+	/**
+	 * Writes review data to file
+	 * 
+	 * @param file The file to write to
+	 */
 	public void writeToFile(File file) throws FileNotFoundException {
 		// Prepare data file
 		PrintWriter writer = new PrintWriter(file.getAbsoluteFile());
-		String line = null;
+		
+		// Write header line
+		String line = "Categories; Best Restaurants in Rockville; Average Rating";
+		writer.println(line);
 		
 		// Construct data line
 		for (int i = 0; i < categoryList.size(); i++) {
@@ -174,5 +182,27 @@ public class BestFoodManager implements BestFoodManagerInterface {
 
 	public ArrayList<ArrayList<Restaurant>> getRestaurantList() {
 		return restaurantList;
+	}
+
+	/**
+	 * Returns the averages of all of the restaurant's ratings
+	 * 
+	 * @return The average
+	 */
+	public double[] getAverages() {
+		double[] averages = new double[categoryList.size()];
+		double total = 0.0;
+		
+		for (int i = 0; i < categoryList.size(); i++) {
+			total = 0.0;
+			
+			for (int j = 0; j < restaurantList.get(i).size(); j++) {
+				total += restaurantList.get(i).get(j).getRating();				
+			}
+			
+			averages[i] = total / restaurantList.get(i).size();;
+		}
+			
+		return averages;
 	}
 }

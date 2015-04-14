@@ -1,0 +1,8 @@
+Mexican;Taco Bar: 4.5;Al Carbon: 4.0;Tortacos: 4.2;El Mariachi: 3.5;
+Thai;Thai Cuisine: 4.0;Thai House: 4.5;Amina Thai: 4.2;
+American (Traditional);Coastal Flats: 4.0;Urban BBQ: 3.5;
+American (New);Potomac Grill: 4.5;Dogfish Head Alehouse: 4.0;Chef Geoff's: 3.5;
+Greek;Cava Mezze: 4.5;Mykonos Grill: 4.2;Apollo Restaurant: 4.0;Vasilis Med Grill: 4.1;
+Chinese;Sichuan Jin River: 3.5;Joe's Noodle House: 4.5;
+Italian;Il Pizzico: 4.5;Sugo Osteria: 4.0;Vignola Gourmet: 4.4;
+Vietnamese;Pho Nom Nom: 4.2;Mi La Cay: 4.5;Mr Banh Mi: 4.0;Pho 75: 4.1;Pho Eatery: 3.5;

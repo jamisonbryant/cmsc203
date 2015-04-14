@@ -1,4 +1,8 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -88,15 +92,17 @@ public class BestFoodManagerTest {
 		Restaurant[][] rData = null;
 		Restaurant[][] bestRData = null;
 		Restaurant[] expectedBestAmTradData = {new Restaurant("Coastal Flats", 4.0), new Restaurant("Urban BBQ", 3.5)};
-		Restaurant[] expectedBestItalianData = {new Restaurant("Il Pizzico", 4.5), new Restaurant("Vignola Gourmet", 4.4),new Restaurant("Sugo Osteria", 4.0)};
+		Restaurant[] expectedBestItalianData = {new Restaurant("Il Pizzico", 4.5), new Restaurant("Vignola Gourmet", 4.4), new Restaurant("Sugo Osteria", 4.0)};
 		File testFile = new File("testFile.txt");
+		
 		try {
-			rData = foodManager.readFromFile(testFile);
+			rData = foodManager.readFromFile(testFile);					
 			foodManager.setBestRestaurants(rData);
 			bestRData = foodManager.getBestRestaurants();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		try {
 			assertArrayEquals("Incorrect Amer Traditional Array Results", expectedBestAmTradData, bestRData[2]);
 			assertArrayEquals("Incorrect Italian Array Results", expectedBestItalianData, bestRData[6]);
