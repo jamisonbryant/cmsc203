@@ -1,6 +1,14 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+import javax.swing.JOptionPane;
 
 /**
  * Assignment 6 - Yelp! Restaurant Data Application
@@ -13,6 +21,9 @@ import java.io.IOException;
  * @see    Restaurant
  */
 public class BestFoodManager implements BestFoodManagerInterface {
+	private Restaurant[][] restaurants;
+	private ArrayList<String> categories;
+	
 	/**
 	 * Reads restaurant data from a file
 	 * 
@@ -22,51 +33,70 @@ public class BestFoodManager implements BestFoodManagerInterface {
 	 */
 	@Override
 	public Restaurant[][] readFromFile(File file) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+		Restaurant[] restaurants = null;
+		Restaurant[][] allRestaurants = null;
+		
+		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+			String line = null;
+			int lines = 0;
+			
+			while ((line = reader.readLine()) != null) {
+				// Increment line count
+				lines++;
+				
+				// Parse category data
+				String[] parts = line.split(";");
+				String category = parts[0];
+				categories.add(category);				
+				
+				// Create array for restaurants
+				restaurants = new Restaurant[parts.length - 1];
+							
+				for (int i = 1; i < parts.length; i++) {
+					// Parse restaurant data					
+					String[] chunks = parts[i].split(":");
+					
+					// Create restaurant
+					Restaurant restaurant = new Restaurant(chunks[0], 
+						Double.parseDouble(chunks[1]));
+					
+					// Add restaurant to array
+					restaurants[i - 1] = restaurant;
+				}			
+			}
+			
+			// Add restaurants to complete array
+			allRestaurants = new Restaurant[lines][];
+			
+			for (int i = 0; i < lines; i++) {
+				allRestaurants[i] = restaurants;
+			}
+		}
+		
+		return restaurantArray;
 	}
 
-	/**
-	 * Not sure what this does yet
-	 * 
-	 * @param A 2-dimensional array of restaurants
-	 */
 	@Override
-	public void setBestRestaurants(Restaurant[][] restaurants) {
+	public void setBestRestaurants(Restaurant[][] rdata) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	/**
-	 * Not sure what this does yet
-	 * 
-	 * @return A 2-dimensional array of restaurants
-	 */
 	@Override
 	public Restaurant[][] getBestRestaurants() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 * Writes restaurant data to a file
-	 * 
-	 * @param  The file to write data to
-	 * @throws FileNotFoundException
-	 */
 	@Override
-	public void writeToFile(File file) throws FileNotFoundException {
+	public void writeToFile(File outFile) throws FileNotFoundException {
+		// TODO Auto-generated method stub
 		
 	}
 
-	/**
-	 * Returns an array of restaurant categories
-	 * 
-	 * @return An array of categories
-	 */
 	@Override
 	public String[] getCategories() {
+		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

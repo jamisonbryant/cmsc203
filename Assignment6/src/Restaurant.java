@@ -10,6 +10,25 @@
 public class Restaurant implements Comparable<Restaurant> {
 	private String name;
 	private double rating;
+	
+	/**
+	 * Constructs a new restaurant
+	 */
+	public Restaurant() {
+		this.name = "";
+		this.rating = 0.0;
+	}
+
+	/**
+	 * Constructs a new restaurant
+	 * 
+	 * @param name   The restaurant's name
+	 * @param rating The restaurant's rating
+	 */
+	public Restaurant(String name, double rating) {
+		this.name = name;
+		this.rating = rating;
+	}
 
 	/**
 	 * Compares the restaurant to another restaurant

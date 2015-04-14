@@ -22,6 +22,8 @@ import javax.swing.JPanel;
  */
 public class Application extends JFrame implements ActionListener {
 	private BestFoodManager manager;
+	private Restaurant[][] restaurants;
+	private boolean isFileRead;
 	
 	/**
 	 * Starts the application
@@ -36,6 +38,10 @@ public class Application extends JFrame implements ActionListener {
 	 * Constructs the application
 	 */
 	public Application() {
+		// Initialize fields
+		manager = new BestFoodManager();
+		isFileRead = false;
+		
 		// Create GUI window
 		setTitle("Best Food Manager");
 		setSize(800, 500);
@@ -68,6 +74,10 @@ public class Application extends JFrame implements ActionListener {
 		bestButton.setActionCommand("BEST");
 		bestButton.addActionListener(this);
 		
+			if (!isFileRead) {
+				bestButton.setEnabled(false);
+			}
+		
 		writeButton.setActionCommand("WRITE");
 		writeButton.addActionListener(this);
 		
@@ -93,7 +103,7 @@ public class Application extends JFrame implements ActionListener {
 		controlPanel.add(readButton);
 		controlPanel.add(bestButton);
 		controlPanel.add(writeButton);
-		controlPanel.add(exitButton);		
+		controlPanel.add(exitButton);
 		
 		// Add main panels to frame
 		add(dataPanel, BorderLayout.PAGE_START);
@@ -121,15 +131,21 @@ public class Application extends JFrame implements ActionListener {
 			// Pass file to manager
 			if(response == JFileChooser.APPROVE_OPTION) {				
 				try {
-					manager.readFromFile(chooser.getSelectedFile());
+					restaurants = 
+						manager.readFromFile(chooser.getSelectedFile());
 				} catch(IOException ex) {
 					JOptionPane.showMessageDialog(null, 
 						"Could not read from chosen file", "Error", 
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
-		} else if (command.equals("BEST")) {			
 			
+			// Enable Best button
+			isFileRead = true;
+		} else if (command.equals("BEST")) {
+			// Get best restaurants
+			manager.setBestRestaurants(restaurants);
+			restaurants = manager.getBestRestaurants();
 		} else if (command.equals("WRITE")) {
 			// Prompt for file to read from
 			JFileChooser chooser = new JFileChooser();			
