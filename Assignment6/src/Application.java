@@ -2,10 +2,13 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -107,6 +110,46 @@ public class Application extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		// TODO Auto-generated method stub		
+		// Get event action command
+		String command = event.getActionCommand();
+		
+		if (command.equals("READ")) {
+			// Prompt for file to read from
+			JFileChooser chooser = new JFileChooser();			
+			int response = chooser.showOpenDialog(null);
+			
+			// Pass file to manager
+			if(response == JFileChooser.APPROVE_OPTION) {				
+				try {
+					manager.readFromFile(chooser.getSelectedFile());
+				} catch(IOException ex) {
+					JOptionPane.showMessageDialog(null, 
+						"Could not read from chosen file", "Error", 
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		} else if (command.equals("BEST")) {			
+			
+		} else if (command.equals("WRITE")) {
+			// Prompt for file to read from
+			JFileChooser chooser = new JFileChooser();			
+			int response = chooser.showOpenDialog(null);
+			
+			// Pass file to manager
+			if(response == JFileChooser.APPROVE_OPTION) {				
+				try {
+					manager.writeToFile(chooser.getSelectedFile());
+				} catch(IOException ex) {
+					JOptionPane.showMessageDialog(null, 
+						"Could not write to chosen file", "Error", 
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}						
+		} else if (command.equals("EXIT")) {
+			// Exit application
+			System.exit(0);
+		} else {
+			throw new RuntimeException("Unrecognized event action command");
+		}
 	}
 }

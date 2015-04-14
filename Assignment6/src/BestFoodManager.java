@@ -13,7 +13,6 @@ import java.io.IOException;
  * @see    Restaurant
  */
 public class BestFoodManager implements BestFoodManagerInterface {
-
 	/**
 	 * Reads restaurant data from a file
 	 * 
