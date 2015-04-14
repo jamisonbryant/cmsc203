@@ -4,11 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-
-import javax.swing.JOptionPane;
 
 /**
  * Assignment 6 - Yelp! Restaurant Data Application
@@ -82,12 +80,16 @@ public class BestFoodManager implements BestFoodManagerInterface {
 			}
 		}
 		
-		restaurantArray = new Restaurant[rows][columns];
+		restaurantArray = new Restaurant[rows][];
 		
 		for (int i = 0; i < restaurantList.size(); i++) {
-			for (int j = 0; j < restaurantList.get(i).size(); j++) {
-				restaurantArray[i][j] = restaurantList.get(i).get(j);
+			Restaurant[] restaurants = new Restaurant[restaurantList.get(i).size()];
+					
+			for (int j = 0; j < restaurantList.get(i).size(); j++) {				
+				restaurants[j] = restaurantList.get(i).get(j);
 			}
+			
+			restaurantArray[i] = restaurants;
 		}
 		
 		// Return array of restaurants
@@ -113,20 +115,17 @@ public class BestFoodManager implements BestFoodManagerInterface {
 		
 		// Convert restaurant data to array
 		int rows = categoryList.size();
-		int columns = 0;
+
+		restaurantArray = new Restaurant[rows][];
 		
 		for (int i = 0; i < restaurantList.size(); i++) {
-			if (columns < restaurantList.get(i).size()) {
-				columns = restaurantList.get(i).size(); 
+			Restaurant[] restaurants = new Restaurant[restaurantList.get(i).size()];
+					
+			for (int j = 0; j < restaurantList.get(i).size(); j++) {				
+				restaurants[j] = restaurantList.get(i).get(j);
 			}
-		}
-		
-		restaurantArray = new Restaurant[rows][columns];
-		
-		for (int i = 0; i < restaurantList.size(); i++) {
-			for (int j = 0; j < restaurantList.get(i).size(); j++) {
-				restaurantArray[i][j] = restaurantList.get(i).get(j);
-			}
+			
+			restaurantArray[i] = restaurants;
 		}
 		
 		// Return array of restaurants
@@ -148,12 +147,20 @@ public class BestFoodManager implements BestFoodManagerInterface {
 		writer.println(line);
 		
 		// Construct data line
+		double total = 0.0;
+		double average = 0.0;
+		
 		for (int i = 0; i < categoryList.size(); i++) {
-			line = categoryList.get(i) + "; ";
+			line = categoryList.get(i) + ";";
+			total = 0.0;
 			
 			for (int j = 0; j < restaurantList.get(i).size(); j++) {
-				line += restaurantList.get(i).get(j).toString() + ";";			
+				total += restaurantList.get(i).get(j).getRating();
+				line += restaurantList.get(i).get(j).getName() + "; ";			
 			}
+			
+			average = total / restaurantList.get(i).size();
+			line += new DecimalFormat("#.##").format(average);
 			
 			// Write line to file
 			writer.println(line);

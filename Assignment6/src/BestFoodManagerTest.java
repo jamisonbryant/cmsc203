@@ -60,7 +60,22 @@ public class BestFoodManagerTest {
 
 	@Test
 	public void testReadFromFileSTUDENT() {
-		fail("Not implemented yet.");
+		Restaurant[][] restaurant = null;
+		File testFile = new File("studentTestFile.txt");
+		try { 
+			restaurant = foodManager.readFromFile(testFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			assertEquals("Chi Minh Chicken", restaurant[0][3].getName());
+			assertEquals("Chick-Fil-A", restaurant[1][2].getName());
+			assertEquals("Roy Rogers", restaurant[0][5].getName());
+			fail("Should have thrown an ArrayIndexOutOfBoundsException");
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+			assertTrue("testReadFromFileSTUDENT() correctly threw an ArrayIndexOutOfBoundsException", true);
+		}
 	}
 	
 	@Test
@@ -95,15 +110,23 @@ public class BestFoodManagerTest {
 		Restaurant[] expectedBestItalianData = {new Restaurant("Il Pizzico", 4.5), new Restaurant("Vignola Gourmet", 4.4), new Restaurant("Sugo Osteria", 4.0)};
 		File testFile = new File("testFile.txt");
 		
+		/*
+		 * This test throws a false-positive, and I don't know why. Character-
+		 * for-character the expected string "Coastal Flats: 4.0" and the actual
+		 * string "Coastal Flats: 4.0" are identical, but for some reason this
+		 * test continues to say that they differ.
+		 */
+		
 		try {
-			rData = foodManager.readFromFile(testFile);					
+			rData = foodManager.readFromFile(testFile);
+			
 			foodManager.setBestRestaurants(rData);
 			bestRData = foodManager.getBestRestaurants();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		try {
+		try {			
 			assertArrayEquals("Incorrect Amer Traditional Array Results", expectedBestAmTradData, bestRData[2]);
 			assertArrayEquals("Incorrect Italian Array Results", expectedBestItalianData, bestRData[6]);
 		}
@@ -115,7 +138,34 @@ public class BestFoodManagerTest {
 	
 	@Test
 	public void testSetBestRestaurantsSTUDENT() {
-		fail("Not implemented yet.");
+		Restaurant[][] restaurants = null;
+		Restaurant[][] bestRestaurants = null;
+		Restaurant[] expectedBest1 = {new Restaurant("Chi Minh Chicken", 5.0), new Restaurant("Wok This Way", 4.5), new Restaurant("Quik-Chicken", 3.2), new Restaurant("Golden Star Buffet", 3.1)};
+		Restaurant[] expectedBest2 = {new Restaurant("Chick-Fil-A", 4.9), new Restaurant("McDonald's", 3.1), new Restaurant("Burger King", 2.1)};
+		File testFile = new File("studentTestFile.txt");
+		
+		/*
+		 * This test throws a false-positive, and I don't know why. Character-
+		 * for-character the expected string "Coastal Flats: 4.0" and the actual
+		 * string "Coastal Flats: 4.0" are identical, but for some reason this
+		 * test continues to say that they differ.
+		 */
+		
+		try {
+			restaurants = foodManager.readFromFile(testFile);
+			foodManager.setBestRestaurants(restaurants);
+			bestRestaurants = foodManager.getBestRestaurants();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {			
+			assertArrayEquals("Incorrect Chinese results", expectedBest1, bestRestaurants[0]);
+			assertArrayEquals("Incorrect American results", expectedBest2, bestRestaurants[1]);
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+			assertFalse("Threw an ArrayIndexOutOfBoundsException", true);
+		}
 	}
 
 	@Test
@@ -156,8 +206,9 @@ public class BestFoodManagerTest {
 			foodManager.writeToFile(testOutFile);
 			Scanner fileScan = new Scanner(testOutFile);
 			while (fileScan.hasNext()) {
-				inLine = fileScan.nextLine();  //read one line 
+				inLine = fileScan.nextLine();  //read one line
 				elements = inLine.split(";");
+				
 				if (index==0) {	//zero-th line contains Categories; Best Restaurants in Rockville; Average Rating
 					assertEquals("Categories", elements[0]);
 				}

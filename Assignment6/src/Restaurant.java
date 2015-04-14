@@ -45,11 +45,11 @@ public class Restaurant implements Comparable<Restaurant> {
 		
 		// Check how the two restaurant's ratings compare
 		// If ratings are not comparable throw an exception
-		if (this.rating > other.rating) {
+		if (this.rating < other.rating) {
 			return better;
 		} else if (this.rating == other.rating) {
 			return same;
-		} else if (this.rating < other.rating) {
+		} else if (this.rating > other.rating) {
 			return worse;
 		} else {
 			throw new RuntimeException("Restaurant types are not comparable");
