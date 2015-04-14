@@ -91,4 +91,14 @@ public class Restaurant implements Comparable<Restaurant> {
 	public void setRating(double rating) {
 		this.rating = rating;
 	}
+	
+	/**
+	 * Returns a representation of the restaurant as a string
+	 * 
+	 * @return The restaurant as a string
+	 */
+	@Override
+	public String toString() {
+		return name + ": " + rating;
+	}
 }

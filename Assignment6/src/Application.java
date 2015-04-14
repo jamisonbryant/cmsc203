@@ -3,11 +3,14 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -22,8 +25,12 @@ import javax.swing.JPanel;
  */
 public class Application extends JFrame implements ActionListener {
 	private BestFoodManager manager;
-	private Restaurant[][] restaurants;
-	private boolean isFileRead;
+	private ArrayList<String> categoryList;
+	private ArrayList<ArrayList<Restaurant>> restaurantList;	
+	private JLabel categoriesLabel;
+	private JLabel restaurantsLabel;
+	private JLabel ratingsLabel;
+	private JButton bestButton;
 	
 	/**
 	 * Starts the application
@@ -40,11 +47,16 @@ public class Application extends JFrame implements ActionListener {
 	public Application() {
 		// Initialize fields
 		manager = new BestFoodManager();
-		isFileRead = false;
+		categoryList = new ArrayList<String>();
+		restaurantList = new ArrayList<ArrayList<Restaurant>>();
+		categoriesLabel = new JLabel("");
+		restaurantsLabel = new JLabel("");
+		ratingsLabel = new JLabel("");
+		bestButton = new JButton("Best");
 		
 		// Create GUI window
 		setTitle("Best Food Manager");
-		setSize(800, 500);
+		setSize(1325, 400);
 		setLocationRelativeTo(null);
 		
 		// Create main panels
@@ -53,17 +65,21 @@ public class Application extends JFrame implements ActionListener {
 		
 		// Create subpanels
 		JPanel categoriesPanel = new JPanel();
-		categoriesPanel.setPreferredSize(new Dimension(150, 400));
+		categoriesPanel.setPreferredSize(new Dimension(150, 300));
 		
 		JPanel restaurantsPanel = new JPanel();
-		restaurantsPanel.setPreferredSize(new Dimension(450, 400));		
+		restaurantsPanel.setPreferredSize(new Dimension(1065, 300));		
 		
 		JPanel ratingsPanel = new JPanel();		
-		ratingsPanel.setPreferredSize(new Dimension(150, 400));
+		ratingsPanel.setPreferredSize(new Dimension(60, 300));
+		
+		// Add labels to panels
+		categoriesPanel.add(categoriesLabel);
+		restaurantsPanel.add(restaurantsLabel);
+		ratingsPanel.add(ratingsLabel);
 		
 		// Create buttons
-		JButton readButton = new JButton("Read");
-		JButton bestButton = new JButton("Best");
+		JButton readButton = new JButton("Read");		
 		JButton writeButton = new JButton("Write");		
 		JButton exitButton = new JButton("Exit");
 		
@@ -73,10 +89,7 @@ public class Application extends JFrame implements ActionListener {
 		
 		bestButton.setActionCommand("BEST");
 		bestButton.addActionListener(this);
-		
-			if (!isFileRead) {
-				bestButton.setEnabled(false);
-			}
+		bestButton.setEnabled(false);
 		
 		writeButton.setActionCommand("WRITE");
 		writeButton.addActionListener(this);
@@ -131,8 +144,7 @@ public class Application extends JFrame implements ActionListener {
 			// Pass file to manager
 			if(response == JFileChooser.APPROVE_OPTION) {				
 				try {
-					restaurants = 
-						manager.readFromFile(chooser.getSelectedFile());
+					manager.readFromFile(chooser.getSelectedFile());
 				} catch(IOException ex) {
 					JOptionPane.showMessageDialog(null, 
 						"Could not read from chosen file", "Error", 
@@ -140,12 +152,59 @@ public class Application extends JFrame implements ActionListener {
 				}
 			}
 			
-			// Enable Best button
-			isFileRead = true;
+			categoryList = manager.getCategoryList();		
+			
+			// Update GUI
+			String label = "";
+			
+			for (int i = 0; i < categoryList.size(); i++) {
+				label += categoryList.get(i) + "<br /><br />";
+			}
+			
+			categoriesLabel.setText("<html>" + label + "</html>");
+			bestButton.setEnabled(true);
 		} else if (command.equals("BEST")) {
 			// Get best restaurants
-			manager.setBestRestaurants(restaurants);
-			restaurants = manager.getBestRestaurants();
+			Restaurant[][] restaurantArray = manager.getRestaurantArray();
+			manager.setBestRestaurants(restaurantArray);
+			restaurantArray = manager.getBestRestaurants();
+			
+			categoryList = manager.getCategoryList();
+			restaurantList = manager.getRestaurantList();
+			
+			// Update GUI
+			String label = "";
+			
+			for (int i = 0; i < categoryList.size(); i++) {
+				for (int j = 0; j < restaurantList.get(i).size(); j++) {
+					label += restaurantList.get(i).get(j).getName();
+					
+					if (j != restaurantList.get(i).size() - 1) {
+						label += ", ";
+					}
+				}
+				
+				label += "<br /><br />";
+			}
+			
+			restaurantsLabel.setText("<html>" + label + "</html>");
+			
+			label = "";
+			double total = 0.0;
+			double average = 0.0;		
+			
+			for (int i = 0; i < categoryList.size(); i++) {
+				for (int j = 0; j < restaurantList.get(i).size(); j++) {
+					total += restaurantList.get(i).get(j).getRating();				
+				}
+				
+				average = total / restaurantList.get(i).size();
+				String result = new DecimalFormat("#.##").format(average);
+				
+				label += result + "<br /><br />";
+			}
+			
+			ratingsLabel.setText("<html>" + label + "</html>");
 		} else if (command.equals("WRITE")) {
 			// Prompt for file to read from
 			JFileChooser chooser = new JFileChooser();			
